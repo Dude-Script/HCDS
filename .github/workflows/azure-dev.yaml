@@ -6,10 +6,7 @@ on:
     branches: [ main ]
 
 # GitHub Actions workflow to deploy to Azure using azd
-# To configure required secrets for connecting to Azure, simply run `azd pipeline config`
-
 # Set up permissions for deploying with secretless Azure federated credentials
-# https://learn.microsoft.com/en-us/azure/developer/github/connect-from-azure?tabs=azure-portal%2Clinux#set-up-azure-login-with-openid-connect-authentication
 permissions:
   id-token: write
   contents: read
@@ -19,23 +16,23 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # azd required
-      AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
-      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-      AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
-      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
+      AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
       # project specific
-      DEPLOY_AZURE_OPENAI: ${{ vars.DEPLOY_AZURE_OPENAI }}
-      AZURE_OPENAI_CHAT_MODEL: ${{ vars.AZURE_OPENAI_CHAT_MODEL }}
-      AZURE_OPENAI_CHAT_DEPLOYMENT: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT }}
-      AZURE_OPENAI_CHAT_DEPLOYMENT_VERSION: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT_VERSION }}
-      AZURE_OPENAI_CHAT_DEPLOYMENT_CAPACITY: ${{ vars.AZURE_OPENAI_CHAT_DEPLOYMENT_CAPACITY }}
-      AZURE_OPENAI_EMBED_MODEL: ${{ vars.AZURE_OPENAI_EMBED_MODEL }}
-      AZURE_OPENAI_EMBED_DEPLOYMENT: ${{ vars.AZURE_OPENAI_EMBED_DEPLOYMENT }}
-      AZURE_OPENAI_EMBED_DEPLOYMENT_VERSION: ${{ vars.AZURE_OPENAI_EMBED_DEPLOYMENT_VERSION }}
-      AZURE_OPENAI_EMBED_DEPLOYMENT_CAPACITY: ${{ vars.AZURE_OPENAI_EMBED_DEPLOYMENT_CAPACITY }}
-      AZURE_OPENAI_EMBED_DIMENSIONS: ${{ vars.AZURE_OPENAI_EMBED_DIMENSIONS }}
-      USE_AI_PROJECT: ${{ vars.USE_AI_PROJECT }}
+      DEPLOY_AZURE_OPENAI: ${{ secrets.DEPLOY_AZURE_OPENAI }}
+      AZURE_OPENAI_CHAT_MODEL: ${{ secrets.AZURE_OPENAI_CHAT_MODEL }}
+      AZURE_OPENAI_CHAT_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_CHAT_DEPLOYMENT }}
+      AZURE_OPENAI_CHAT_DEPLOYMENT_VERSION: ${{ secrets.AZURE_OPENAI_CHAT_DEPLOYMENT_VERSION }}
+      AZURE_OPENAI_CHAT_DEPLOYMENT_CAPACITY: ${{ secrets.AZURE_OPENAI_CHAT_DEPLOYMENT_CAPACITY }}
+      AZURE_OPENAI_EMBED_MODEL: ${{ secrets.AZURE_OPENAI_EMBED_MODEL }}
+      AZURE_OPENAI_EMBED_DEPLOYMENT: ${{ secrets.AZURE_OPENAI_EMBED_DEPLOYMENT }}
+      AZURE_OPENAI_EMBED_DEPLOYMENT_VERSION: ${{ secrets.AZURE_OPENAI_EMBED_DEPLOYMENT_VERSION }}
+      AZURE_OPENAI_EMBED_DEPLOYMENT_CAPACITY: ${{ secrets.AZURE_OPENAI_EMBED_DEPLOYMENT_CAPACITY }}
+      AZURE_OPENAI_EMBED_DIMENSIONS: ${{ secrets.AZURE_OPENAI_EMBED_DIMENSIONS }}
+      USE_AI_PROJECT: ${{ secrets.USE_AI_PROJECT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
