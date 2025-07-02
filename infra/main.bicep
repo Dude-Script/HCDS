@@ -177,7 +177,7 @@ module postgresServer 'core/database/postgresql/flexibleserver.bicep' = {
     storage: {
       storageSizeGB: 32
     }
-    version: '15'
+    version: '17'
     authType: 'EntraOnly'
     entraAdministratorName: postgresEntraAdministratorName
     entraAdministratorObjectId: postgresEntraAdministratorObjectId
