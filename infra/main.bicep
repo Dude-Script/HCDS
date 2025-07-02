@@ -20,28 +20,7 @@ param principalId string = ''
 // Look for desired models on the availability table:
 // https://learn.microsoft.com/azure/ai-services/openai/concepts/models#global-standard-model-availability
 @allowed([
-  'australiaeast'
-  'brazilsouth'
-  'canadaeast'
-  'eastus'
   'eastus2'
-  'francecentral'
-  'germanywestcentral'
-  'japaneast'
-  'koreacentral'
-  'northcentralus'
-  'norwayeast'
-  'polandcentral'
-  'spaincentral'
-  'southafricanorth'
-  'southcentralus'
-  'southindia'
-  'swedencentral'
-  'switzerlandnorth'
-  'uksouth'
-  'westeurope'
-  'westus'
-  'westus3'
 ])
 @metadata({
   azd: {
