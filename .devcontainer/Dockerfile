@@ -1,9 +1,9 @@
 FROM mcr.microsoft.com/devcontainers/base:debian-11
 
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get -y install --no-install-recommends postgresql-client python3-pip \
+    && apt-get -y install --no-install-recommends postgresql-client python3-pip python3-venv \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
