@@ -1,0 +1,49 @@
+name: Trigger auto deployment for hcds-wv4ux2snotsdy-ca
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/hcds-wv4ux2snotsdy-ca-AutoDeployTrigger-b42d194d-579a-4af2-98e8-5d71bbd7d3be.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.HCDSWV4UX2SNOTSDYCA_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.HCDSWV4UX2SNOTSDYCA_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.HCDSWV4UX2SNOTSDYCA_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}devcontainer
+          _dockerfilePathKey_: _dockerfilePath_
+          _targetLabelKey_: _targetLabel_
+          registryUrl: hcdswv4ux2snotsdyregistry.azurecr.io
+          registryUsername: ${{ secrets.HCDSWV4UX2SNOTSDYCA_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.HCDSWV4UX2SNOTSDYCA_REGISTRY_PASSWORD }}
+          containerAppName: hcds-wv4ux2snotsdy-ca
+          resourceGroup: HCDS-rg
+          imageToBuild: hcdswv4ux2snotsdyregistry.azurecr.io/hcds-wv4ux2snotsdy-ca:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
